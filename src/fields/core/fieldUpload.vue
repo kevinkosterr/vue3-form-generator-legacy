@@ -10,12 +10,12 @@
 		:placeholder="schema.placeholder",
 		:readonly="schema.readonly",
 		:required="schema.required",
-		:disabled="disabled", 
+		:disabled="disabled || null",
 		v-attributes="'input'")
 </template>
 
 <script>
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { isFunction } from "lodash";
 
 export default {

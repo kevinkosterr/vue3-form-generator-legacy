@@ -7,12 +7,12 @@
 		@input="onInput",
 		@blur="onBlur",
 		:class="schema.fieldClasses",
-		@change="schema.onChange || null",
-		:disabled="disabled",
+		@change="schema.onChange",
+		:disabled="disabled || null",
 		:accept="schema.accept",
 		:alt="schema.alt",
 		:autocomplete="schema.autocomplete",
-		:checked="schema.checked",
+		:checked="schema.checked || null",
 		:dirname="schema.dirname",
 		:formaction="schema.formaction",
 		:formenctype="schema.formenctype",
@@ -31,7 +31,7 @@
 		:placeholder="schema.placeholder",
 		:readonly="schema.readonly",
 		:required="schema.required",
-		:size="schema.size",
+		:size="schema && schema.size > 0 ? schema.size : 1",
 		:src="schema.src",
 		:step="schema.step",
 		:width="schema.width",
@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { debounce, get as objGet, isFunction, isNumber } from "lodash";
 import fecha from "fecha";
 

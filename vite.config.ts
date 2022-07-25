@@ -9,20 +9,19 @@ export default defineConfig({
     }
   },
   build: {
-    lib: {
-      entry: 'src/main.ts',
-      name: 'vue-form-builder-vue3',
-      fileName: (format) => `vfg.js`,
-    },
     rollupOptions: {
-      external: ['vue'],
       output: {
-        // Provide global variables to use in the UMD build
-        // Add external deps here
         globals: {
           vue: 'Vue',
         },
       },
+      external: ['vue']
+    },
+    minify: false,
+    lib: {
+      entry: path.resolve(__dirname, 'src/main.ts'),
+      name: 'vue-form-generator',
+      fileName: (format) => `${format}.js`
     },
   },
   plugins: [vue()]

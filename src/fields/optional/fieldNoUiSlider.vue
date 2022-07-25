@@ -1,9 +1,9 @@
 <template>
-	<div class="slider" :disabled="disabled" :class="{ 'contain-pips': containPips, 'contain-tooltip': containTooltip }"></div>
+	<div class="slider" :disabled="disabled || null" :class="{ 'contain-pips': containPips, 'contain-tooltip': containTooltip }"></div>
 </template>
 
 <script>
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { isArray, defaults } from "lodash";
 
 export default {
@@ -16,11 +16,14 @@ export default {
 	},
 
 	watch: {
-		model: function() {
-			if (window.noUiSlider && this.slider && this.slider.noUiSlider) {
-				this.slider.noUiSlider.set(this.value);
-			}
-		}
+		model: {
+      handler() {
+        if (window.noUiSlider && this.slider && this.slider.noUiSlider) {
+          this.slider.noUiSlider.set(this.value);
+        }
+      },
+      deep: true
+    }
 	},
 
 	computed: {
@@ -92,7 +95,7 @@ export default {
 		});
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if (this.slider) this.slider.noUiSlider.off("change");
 	}
 };

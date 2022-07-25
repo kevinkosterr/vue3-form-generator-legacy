@@ -1,13 +1,13 @@
 <template lang="pug">
-select.selectpicker(v-model="value", :disabled="disabled", :multiple="schema.multiSelect", :title="schema.placeholder", data-width="100%", :name="schema.inputName")
-		option(:disabled="schema.required", v-if="schema.multiSelect !== true", :value="null", :selected="value == undefined")
+select.selectpicker(v-model="value", :disabled="disabled || null", :multiple="schema.multiSelect", :title="schema.placeholder", data-width="100%", :name="schema.inputName")
+		option(:disabled="schema.required || null", v-if="schema.multiSelect !== true", :value="null", :selected="value == undefined")
 		option(v-for="item in items", :value="getItemValue(item)") {{ getItemName(item) }}
 </template>
 
 <script>
 /* global $ */
 import { isObject } from "lodash";
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 
 export default {
 	mixins: [abstractField],
@@ -57,9 +57,12 @@ export default {
 	},
 
 	watch: {
-		model: function() {
-			if ($.fn.selectpicker) $(this.$el).selectpicker("refresh");
-		}
+		model: {
+      deep: true,
+      handler() {
+        if ($.fn.selectpicker) $(this.$el).selectpicker("refresh");
+      }
+    }
 	},
 
 	mounted() {
@@ -76,7 +79,7 @@ export default {
 		});
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if ($.fn.selectpicker) $(this.$el).selectpicker("destroy");
 	}
 };

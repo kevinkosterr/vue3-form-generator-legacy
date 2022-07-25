@@ -1,10 +1,10 @@
 <template lang="pug">
-input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled || null", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
 </template>
 
 <script>
 /* global $ */
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 
 export default {
 	mixins: [abstractField],
@@ -23,7 +23,7 @@ export default {
 		});
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if (window.$ && window.$.fn.mask) $(this.$el).unmask();
 	}
 };

@@ -1,13 +1,13 @@
 <template lang="pug">
 .input-group.date
-		input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+		input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled || null", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
 		span.input-group-addon
 			span.glyphicon.glyphicon-calendar
 </template>
 
 <script>
 /* global $ */
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { defaults } from "lodash";
 import dateFieldHelper from "../../utils/dateFieldHelper";
 
@@ -46,7 +46,7 @@ export default {
 		});
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if (window.$ && window.$.fn.datetimepicker) {
 			$(this.$el)
 				.data("DateTimePicker")

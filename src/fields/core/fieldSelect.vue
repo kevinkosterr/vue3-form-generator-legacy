@@ -1,6 +1,6 @@
 <template lang="pug">
-select.form-control(v-model="value", :disabled="disabled", :name="schema.inputName", :id="getFieldID(schema)", :class="schema.fieldClasses", v-attributes="'input'")
-		option(v-if="!selectOptions.hideNoneSelectedText", :disabled="schema.required", :value="null") {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
+select.form-control(v-model="value", :disabled="disabled || null", :name="schema.inputName", :id="getFieldID(schema)", :class="schema.fieldClasses", v-attributes="'input'")
+		option(v-if="!selectOptions.hideNoneSelectedText", :disabled="schema.required || null", :value="null") {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
 
 		template(v-for="item in items")
 			optgroup(v-if="item.group", :label="getGroupName(item)")
@@ -11,7 +11,7 @@ select.form-control(v-model="value", :disabled="disabled", :name="schema.inputNa
 
 <script>
 import { isObject, isNil, find } from "lodash";
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 
 export default {
 	mixins: [abstractField],

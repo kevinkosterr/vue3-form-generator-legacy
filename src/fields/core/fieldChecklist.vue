@@ -1,12 +1,12 @@
 <template lang="pug">
 .wrapper(v-attributes="'wrapper'")
-		.listbox.form-control(v-if="schema.listBox", :disabled="disabled")
+		.listbox.form-control(v-if="schema.listBox", :disabled="disabled || null")
 			.list-row(v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
 				label
-					input(:id="getFieldID(schema, true)", type="checkbox", :checked="isItemChecked(item)", :disabled="disabled", @change="onChanged($event, item)", :name="getInputName(item)", v-attributes="'input'")
+					input(:id="getFieldID(schema, true)", type="checkbox", :checked="isItemChecked(item) || null", :disabled="disabled || null", @change="onChanged($event, item)", :name="getInputName(item)", v-attributes="'input'")
 					| {{ getItemName(item) }}
 
-		.combobox.form-control(v-if="!schema.listBox", :disabled="disabled")
+		.combobox.form-control(v-if="!schema.listBox", :disabled="disabled || null")
 			.mainRow(@click="onExpandCombo", :class="{ expanded: comboExpanded }")
 				.info {{ selectedCount }} selected
 				.arrow
@@ -14,13 +14,13 @@
 			.dropList
 				.list-row(v-if="comboExpanded", v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
 					label
-						input(:id="getFieldID(schema, true)", type="checkbox", :checked="isItemChecked(item)", :disabled="disabled", @change="onChanged($event, item)", :name="getInputName(item)", v-attributes="'input'")
+						input(:id="getFieldID(schema, true)", type="checkbox", :checked="isItemChecked(item) || null", :disabled="disabled || null", @change="onChanged($event, item)", :name="getInputName(item)", v-attributes="'input'")
 						| {{ getItemName(item) }}
 </template>
 
 <script>
 import { isObject, isNil, clone } from "lodash";
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { slugify } from "../../utils/schema";
 
 export default {

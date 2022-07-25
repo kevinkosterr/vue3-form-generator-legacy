@@ -1,5 +1,5 @@
 <template lang="pug">
-input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName",  debounce="500", @focus="geolocate()", :id="getFieldID(schema)")
+input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled || null", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName",  debounce="500", @focus="geolocate()", :id="getFieldID(schema)")
 </template>
 
 <script>
@@ -8,7 +8,7 @@ input.form-control(type="text", v-model="value", :autocomplete="schema.autocompl
  * https://github.com/gocanto/google-autocomplete
  */
 
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { isFunction } from "lodash";
 
 /* global google */

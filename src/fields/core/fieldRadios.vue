@@ -1,14 +1,14 @@
 <template lang="pug">
-.radio-list(:disabled="disabled", v-attributes="'wrapper'")
+.radio-list(:disabled="disabled || null", v-attributes="'wrapper'")
 		label(v-for="item in items", :class="getItemCssClasses(item)", v-attributes="'label'")
-			input(:id="getFieldID(schema, true)", type="radio", :disabled="isItemDisabled(item)", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item)", :class="schema.fieldClasses", :required="schema.required", v-attributes="'input'")
+			input(:id="getFieldID(schema, true)", type="radio", :disabled="isItemDisabled(item) || null", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item) || null", :class="schema.fieldClasses", :required="schema.required", v-attributes="'input'")
 			| {{ getItemName(item) }}
 
 </template>
 
 <script>
 import { isObject, isFunction, get as objGet } from "lodash";
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 
 export default {
 	mixins: [abstractField],

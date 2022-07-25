@@ -2,20 +2,20 @@
 div.vue-form-generator(v-if='schema != null')
 	fieldset(v-if="schema.fields", :is='tag')
 		template(v-for='field in fields')
-			form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+			form-group(v-if='fieldVisible(field)', ref="children", :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @modelUpdated="onModelUpdated")
 
 	template(v-for='group in groups')
 		fieldset(:is='tag', :class='getFieldRowClasses(group)')
 			legend(v-if='group.legend') {{ group.legend }}
 			template(v-for='field in group.fields')
-				form-group(v-if='fieldVisible(field)', :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @model-updated="onModelUpdated")
+				form-group(v-if='fieldVisible(field)', ref="children", :vfg="vfg", :field="field", :errors="errors", :model="model", :options="options", @validated="onFieldValidated", @modelUpdated="onModelUpdated")
 </template>
 
 <script>
 import { get as objGet, forEach, isFunction, isNil, isArray } from "lodash";
-import formMixin from "./formMixin.js";
+import formMixin from "./formMixin.vue";
 import formGroup from "./formGroup.vue";
-
+import {ref} from "vue";
 export default {
 	name: "formGenerator",
 	components: { formGroup },
@@ -31,6 +31,7 @@ export default {
 				return {
 					validateAfterLoad: false,
 					validateAfterChanged: false,
+          child: ref([]),
 					fieldIdPrefix: "",
 					validateAsync: false,
 					validationErrorClass: "error",
@@ -61,7 +62,8 @@ export default {
 	data() {
 		return {
 			vfg: this,
-			errors: [] // Validation errors
+			errors: [], // Validation errors,
+      children: ref([])
 		};
 	},
 
@@ -90,22 +92,25 @@ export default {
 
 	watch: {
 		// new model loaded
-		model: function(newModel, oldModel) {
-			if (oldModel === newModel)
-				// model property changed, skip
-				return;
+		model: {
+      deep: true,
+      handler(newModel, oldModel) {
+        if (oldModel === newModel)
+            // model property changed, skip
+          return;
 
-			if (newModel != null) {
-				this.$nextTick(() => {
-					// Model changed!
-					if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
-						this.validate();
-					} else {
-						this.clearValidationErrors();
-					}
-				});
-			}
-		}
+        if (newModel != null) {
+          this.$nextTick(() => {
+            // Model changed!
+            if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
+              this.validate();
+            } else {
+              this.clearValidationErrors();
+            }
+          });
+        }
+      }
+    }
 	},
 
 	mounted() {
@@ -134,7 +139,7 @@ export default {
 		// Child field executed validation
 		onFieldValidated(res, errors, field) {
 			// Remove old errors for this field
-			this.errors = this.errors.filter(e => e.field !== field.schema);
+			this.errors = this.errors.filter(e => e.field.fieldName !== field.schema.fieldName);
 
 			if (!res && errors && errors.length > 0) {
 				// Add errors with this field
@@ -151,7 +156,7 @@ export default {
 		},
 
 		onModelUpdated(newVal, schema) {
-			this.$emit("model-updated", newVal, schema);
+			this.$emit("modelUpdated", newVal, schema);
 		},
 
 		// Validating the model properties
@@ -164,10 +169,10 @@ export default {
 			let fields = [];
 			let results = [];
 
-			forEach(this.$children, child => {
+			forEach(this.$refs.children, child => {
 				if (isFunction(child.validate)) {
 					fields.push(child.$refs.child); // keep track of validated children
-					results.push(child.validate(true));
+					results.push(child.$refs.child.validate(true));
 				}
 			});
 
@@ -200,7 +205,7 @@ export default {
 		clearValidationErrors() {
 			this.errors.splice(0);
 
-			forEach(this.$children, child => {
+			forEach(this.$refs.children, child => {
 				child.clearValidationErrors();
 			});
 		},

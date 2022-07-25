@@ -29,7 +29,7 @@ multiselect(
 		:limit="selectOptions.limit",
 		:limit-text="selectOptions.limitText",
 		:loading="selectOptions.loading",
-		:disabled="disabled",
+		:disabled="disabled || null",
 		:max-height="selectOptions.maxHeight",
 		:show-pointer="selectOptions.showPointer",
 		@input="updateSelected",
@@ -47,7 +47,7 @@ multiselect(
 			{{ selectOptions.maxElements }}
 </template>
 <script>
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 
 export default {
 	mixins: [abstractField],

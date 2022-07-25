@@ -1,9 +1,9 @@
 <template lang="pug">
-input(:id="getFieldID(schema)", type="submit", :value="schema.buttonText", @click="onClick", :name="schema.inputName", :disabled="disabled", :class="schema.fieldClasses", v-attributes="'input'")
+input(:id="getFieldID(schema)", type="submit", :value="schema.buttonText", @click="onClick", :name="schema.inputName", :disabled="disabled || null", :class="schema.fieldClasses")
 </template>
 
 <script>
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { get as objGet, isFunction, isEmpty } from "lodash";
 
 export default {

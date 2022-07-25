@@ -1,9 +1,9 @@
 <template lang="pug">
-input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
+input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled || null", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
 </template>
 
 <script>
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { defaults, get as objGet } from "lodash";
 import dateFieldHelper from "../../utils/dateFieldHelper";
 
@@ -50,7 +50,7 @@ export default {
 		this.initialize(objGet(this.schema, "pikadayOptions", {}));
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if (this.picker) {
 			this.picker.destroy();
 		}

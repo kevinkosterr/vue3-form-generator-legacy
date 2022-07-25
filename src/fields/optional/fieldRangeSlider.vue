@@ -4,7 +4,7 @@ input(type="text", :autocomplete="schema.autocomplete", :data-disable="disabled"
 
 <script>
 /* global $ */
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { defaults, isArray } from "lodash";
 
 export default {
@@ -17,21 +17,24 @@ export default {
 	},
 
 	watch: {
-		model: function() {
-			if (window.$ && window.$.fn.ionRangeSlider) {
-				let valueFrom, valueTo;
-				if (isArray(this.value)) {
-					[valueFrom, valueTo] = this.value;
-				} else valueFrom = this.value;
+		model: {
+      deep: true,
+      handler() {
+        if (window.$ && window.$.fn.ionRangeSlider) {
+          let valueFrom, valueTo;
+          if (isArray(this.value)) {
+            [valueFrom, valueTo] = this.value;
+          } else valueFrom = this.value;
 
-				if (this.slider) {
-					this.slider.update({
-						from: valueFrom,
-						to: valueTo
-					});
-				}
-			}
-		}
+          if (this.slider) {
+            this.slider.update({
+              from: valueFrom,
+              to: valueTo
+            });
+          }
+        }
+      }
+    }
 	},
 
 	mounted() {
@@ -68,7 +71,7 @@ export default {
 		});
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if (this.slider) this.slider.destroy();
 	}
 };

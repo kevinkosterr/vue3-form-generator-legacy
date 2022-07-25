@@ -1,12 +1,12 @@
 <template lang="pug">
 label
-		input(type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled", :name="schema.inputName", :id="getFieldID(schema)")
+		input(type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled || null", :name="schema.inputName", :id="getFieldID(schema)")
 		span.label(:data-on="schema.textOn || 'On'", :data-off="schema.textOff || 'Off'", :for="getFieldID(schema)")
 		span.handle
 </template>
 
 <script>
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 
 export default {
 	mixins: [abstractField],
@@ -42,7 +42,7 @@ $field-switch-height: 30px;
 		height: $field-switch-height;
 		padding: 0;
 		margin: 0 10px 10px 0;
-		border-radius: $field-switch-height / 2;
+		border-radius: calc(#{$field-switch-height} / 2);
 		box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
 		cursor: pointer;
 	}

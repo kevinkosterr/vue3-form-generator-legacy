@@ -3,7 +3,7 @@ textarea.form-control(
 		v-model="value",
 		:id="getFieldID(schema)",
 		:class="schema.fieldClasses",
-		:disabled="disabled",
+		:disabled="disabled || null",
 		:maxlength="schema.max",
 		:minlength="schema.min",
 		:placeholder="schema.placeholder",
@@ -15,7 +15,7 @@ textarea.form-control(
 </template>
 
 <script>
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 
 export default {
 	mixins: [abstractField]

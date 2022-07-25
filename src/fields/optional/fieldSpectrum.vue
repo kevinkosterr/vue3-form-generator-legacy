@@ -1,10 +1,10 @@
 <template lang="pug">
-input(type="text", :autocomplete="schema.autocomplete", :disabled="disabled", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+input(type="text", :autocomplete="schema.autocomplete", :disabled="disabled || null", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
 </template>
 
 <script>
 /* global $ */
-import abstractField from "../abstractField";
+import abstractField from "../abstractField.vue";
 import { defaults } from "lodash";
 export default {
 	mixins: [abstractField],
@@ -16,11 +16,14 @@ export default {
 	},
 
 	watch: {
-		model() {
-			if (window.$ && window.$.fn.spectrum) {
-				this.picker.spectrum("set", this.value);
-			}
-		},
+		model: {
+      deep: true,
+      handler() {
+        if (window.$ && window.$.fn.spectrum) {
+          this.picker.spectrum("set", this.value);
+        }
+      }
+    },
 
 		disabled(val) {
 			if (val) this.picker.spectrum("disable");
@@ -52,7 +55,7 @@ export default {
 		});
 	},
 
-	beforeDestroy() {
+	beforeUnmount() {
 		if (this.picker) this.picker.spectrum("destroy");
 	}
 };

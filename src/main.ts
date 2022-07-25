@@ -1,18 +1,8 @@
-import component from "./components/formGenerator.vue";
-import { createDefaultObject, getMultipleFields, mergeMultiObjectFields, slugifyFormID, slugify } from "./components/utils/schema";
-import validators from "./components/utils/validators";
-import fieldComponents from "./components/utils/fieldsLoader";
-import abstractField from "./components/fields/abstractField";
-const install = (Vue: any, options: any) => {
-    Vue.component("VueFormGenerator", module.exports.component);
-    if (options && options.validators) {
-        for (let key in options.validators) {
-            if ({}.hasOwnProperty.call(options.validators, key)) {
-                validators[key] = options.validators[key];
-            }
-        }
-    }
-};
+import component from "./formGenerator.vue";
+import { createDefaultObject, getMultipleFields, mergeMultiObjectFields, slugifyFormID, slugify } from "./utils/schema";
+import validators from "./utils/validators";
+import abstractField from "./fields/abstractField.vue";
+import formGenerator from "./formGenerator.vue";
 
 export default {
     component,
@@ -23,6 +13,14 @@ export default {
     slugify,
     validators,
     abstractField,
-    fieldComponents,
-    install
+    install: (app: any, options: any) => {
+        app.component("VueFormGenerator", formGenerator);
+        if (options && options.validators) {
+            for (let key in options.validators) {
+                if ({}.hasOwnProperty.call(options.validators, key)) {
+                    validators[key] = options.validators[key];
+                }
+            }
+        }
+    }
 };
