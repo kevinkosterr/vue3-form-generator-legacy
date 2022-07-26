@@ -20,7 +20,7 @@
 
 <script>
 import { isObject, isNil, clone } from "lodash";
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { slugify } from "../../utils/schema";
 
 export default {

@@ -1,4 +1,4 @@
-<script>
+// @ts-nocheck
 import { get as objGet, forEach, isFunction, isString, isArray, debounce, uniqueId, uniq as arrayUniq } from "lodash";
 import validators from "../utils/validators";
 import { slugifyFormID } from "../utils/schema";
@@ -90,7 +90,7 @@ export default {
           } else {
             let result = validator(this.value, this.schema, this.model);
             if (result && isFunction(result.then)) {
-              result.then(err => {
+              result.then((err) => {
                 if (err) {
                   this.errors = this.errors.concat(err);
                 }
@@ -222,4 +222,3 @@ export default {
     }
   }
 };
-</script>

@@ -4,7 +4,7 @@ input.form-control(type="text", v-model="value", :autocomplete="schema.autocompl
 
 <script>
 /* global $ */
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 
 export default {
 	mixins: [abstractField],

@@ -3,7 +3,7 @@ input.form-control(type="text", v-model="value", :autocomplete="schema.autocompl
 </template>
 
 <script>
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { defaults, get as objGet } from "lodash";
 import dateFieldHelper from "../../utils/dateFieldHelper";
 

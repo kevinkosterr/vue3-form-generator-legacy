@@ -3,7 +3,7 @@ span(:id="getFieldID(schema)", :class="schema.fieldClasses", v-attributes="'labe
 </template>
 
 <script>
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 
 export default {
 	mixins: [abstractField]

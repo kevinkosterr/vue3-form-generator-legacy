@@ -8,7 +8,7 @@
 
 <script>
 import { isObject, isFunction, get as objGet } from "lodash";
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 
 export default {
 	mixins: [abstractField],

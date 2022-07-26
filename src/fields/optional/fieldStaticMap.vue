@@ -3,7 +3,7 @@ img(:src="mapLink")
 </template>
 
 <script>
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { defaults } from "lodash";
 
 export default {

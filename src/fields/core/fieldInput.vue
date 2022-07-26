@@ -41,7 +41,7 @@
 </template>
 
 <script>
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { debounce, get as objGet, isFunction, isNumber } from "lodash";
 import fecha from "fecha";
 

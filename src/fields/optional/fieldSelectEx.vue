@@ -7,7 +7,7 @@ select.selectpicker(v-model="value", :disabled="disabled || null", :multiple="sc
 <script>
 /* global $ */
 import { isObject } from "lodash";
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 
 export default {
 	mixins: [abstractField],

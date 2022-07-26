@@ -7,7 +7,7 @@
 
 <script>
 /* global $ */
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { defaults } from "lodash";
 import dateFieldHelper from "../../utils/dateFieldHelper";
 

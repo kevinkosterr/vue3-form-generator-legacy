@@ -3,7 +3,7 @@ input(:id="getFieldID(schema)", type="checkbox", v-model="value", :autocomplete=
 </template>
 
 <script>
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 
 export default {
 	mixins: [abstractField]

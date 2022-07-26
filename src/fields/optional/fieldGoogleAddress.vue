@@ -8,7 +8,7 @@ input.form-control(type="text", v-model="value", :autocomplete="schema.autocompl
  * https://github.com/gocanto/google-autocomplete
  */
 
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { isFunction } from "lodash";
 
 /* global google */

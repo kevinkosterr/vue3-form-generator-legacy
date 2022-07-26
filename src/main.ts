@@ -1,7 +1,7 @@
 import component from "./formGenerator.vue";
 import { createDefaultObject, getMultipleFields, mergeMultiObjectFields, slugifyFormID, slugify } from "./utils/schema";
 import validators from "./utils/validators";
-import abstractField from "./fields/abstractField.vue";
+import abstractField from "./fields/abstractField";
 import formGenerator from "./formGenerator.vue";
 
 export default {
@@ -12,7 +12,7 @@ export default {
     slugifyFormID,
     slugify,
     validators,
-    abstractField,
+    ...abstractField,
     install: (app: any, options: any) => {
         app.component("VueFormGenerator", formGenerator);
         if (options && options.validators) {

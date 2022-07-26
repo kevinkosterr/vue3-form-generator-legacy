@@ -3,7 +3,7 @@ input(:id="getFieldID(schema)", type="submit", :value="schema.buttonText", @clic
 </template>
 
 <script>
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { get as objGet, isFunction, isEmpty } from "lodash";
 
 export default {

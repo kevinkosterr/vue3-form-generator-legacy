@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { isArray, defaults } from "lodash";
 
 export default {

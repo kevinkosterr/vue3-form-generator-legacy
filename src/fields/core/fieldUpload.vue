@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { isFunction } from "lodash";
 
 export default {

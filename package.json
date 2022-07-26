@@ -1,7 +1,7 @@
 {
   "name": "vue3-form-generator",
   "private": false,
-  "version": "0.4.8",
+  "version": "0.5.3",
   "type": "module",
   "main": "./dist/es.js",
   "module": "./dist/umd.js",

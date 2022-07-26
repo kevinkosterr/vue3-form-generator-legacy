@@ -4,7 +4,7 @@ input(type="text", :autocomplete="schema.autocomplete", :data-disable="disabled"
 
 <script>
 /* global $ */
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 import { defaults, isArray } from "lodash";
 
 export default {

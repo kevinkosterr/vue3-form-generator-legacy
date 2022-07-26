@@ -11,7 +11,7 @@ select.form-control(v-model="value", :disabled="disabled || null", :name="schema
 
 <script>
 import { isObject, isNil, find } from "lodash";
-import abstractField from "../abstractField.vue";
+import abstractField from "../abstractField.js";
 
 export default {
 	mixins: [abstractField],
