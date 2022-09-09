@@ -5,6 +5,10 @@
   "type": "module",
   "main": "./dist/es.js",
   "module": "./dist/umd.js",
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.com/nick7dam/vue3-form-generator"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
