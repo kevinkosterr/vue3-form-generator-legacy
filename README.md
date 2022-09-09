@@ -42,7 +42,7 @@ You can find details about dependencies in the official [documentation](https://
 
 ### NPM
 
-You can install it via [NPM](http://npmjs.org/) or [yarn](https://yarnpkg.com/).
+You can install it via [NPM](http://npmjs.org/).
 
 #### Latest version for Vue 3.x
 
