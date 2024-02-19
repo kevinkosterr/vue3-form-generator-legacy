@@ -1,16 +1,30 @@
-<template lang="pug">
-label
-		input(type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled || null", :name="schema.inputName", :id="getFieldID(schema)")
-		span.label(:data-on="schema.textOn || 'On'", :data-off="schema.textOff || 'Off'", :for="getFieldID(schema)")
-		span.handle
+<template>
+  <label>
+    <input
+        type="checkbox"
+        v-model="value"
+        :autocomplete="schema.autocomplete"
+        :disabled="disabled || null"
+        :name="schema.inputName"
+        :id="getFieldID(schema)"
+    />
+    <span
+        class="label"
+        :data-on="schema.textOn || 'On'"
+        :data-off="schema.textOff || 'Off'"
+        :for="getFieldID(schema)"
+    ></span>
+    <span class="handle"></span>
+  </label>
 </template>
+
 
 <script>
 import abstractField from "../abstractField.js";
 
 export default {
 	mixins: [abstractField],
-
+  name: 'fieldSwitch',
 	methods: {
 		formatValueToField(value) {
 			if (value != null && this.schema.valueOn) return value === this.schema.valueOn;

@@ -1,17 +1,36 @@
-<template lang="pug">
-div.wrapper
-		input.form-control.link(type="text", v-show="schema.hideInput !== true", v-model="wrappedValue", :autocomplete="schema.autocomplete", :disabled="disabled || null", :placeholder="schema.placeholder", :readonly="schema.readonly")
-		input.form-control.file(type="file", v-if="schema.browse !== false", :disabled="disabled || null", @change="fileChanged", :name="schema.inputName")
-		.preview(:style="previewStyle")
-			.remove(title="Remove image", @click="remove")
+<template>
+  <div class="wrapper">
+    <input
+        class="form-control link"
+        type="text"
+        v-show="schema.hideInput !== true"
+        v-model="wrappedValue"
+        :autocomplete="schema.autocomplete"
+        :disabled="disabled || null"
+        :placeholder="schema.placeholder"
+        :readonly="schema.readonly"
+    />
+    <input
+        class="form-control file"
+        type="file"
+        v-if="schema.browse !== false"
+        :disabled="disabled || null"
+        @change="fileChanged"
+        :name="schema.inputName"
+    />
+    <div class="preview" :style="previewStyle">
+      <div class="remove" title="Remove image" @click="remove"></div>
+    </div>
+  </div>
 </template>
+
 
 <script>
 import abstractField from "../abstractField.js";
 
 export default {
 	mixins: [abstractField],
-
+  name: 'FieldImage',
 	computed: {
 		previewStyle() {
 			if (this.schema.preview !== false) {

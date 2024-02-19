@@ -1,9 +1,22 @@
-<template lang="pug">
-.input-group.date
-		input.form-control(type="text", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled || null", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
-		span.input-group-addon
-			span.glyphicon.glyphicon-calendar
+<template>
+  <div class="input-group date">
+    <input
+        class="form-control"
+        type="text"
+        v-model="value"
+        :autocomplete="schema.autocomplete"
+        :disabled="disabled || null"
+        :placeholder="schema.placeholder"
+        :readonly="schema.readonly"
+        :name="schema.inputName"
+        :id="getFieldID(schema)"
+    />
+    <span class="input-group-addon">
+      <span class="glyphicon glyphicon-calendar"></span>
+    </span>
+  </div>
 </template>
+
 
 <script>
 /* global $ */
@@ -14,6 +27,7 @@ import dateFieldHelper from "../../utils/dateFieldHelper";
 let inputFormat = "YYYY-MM-DD HH:mm:ss";
 
 export default {
+  name: 'FieldDateTimePicker',
 	mixins: [abstractField],
 
 	methods: {

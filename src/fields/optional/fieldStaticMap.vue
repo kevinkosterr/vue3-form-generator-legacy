@@ -1,6 +1,7 @@
-<template lang="pug">
-img(:src="mapLink")
+<template>
+  <img :src="mapLink" />
 </template>
+
 
 <script>
 import abstractField from "../abstractField.js";
@@ -8,7 +9,7 @@ import { defaults } from "lodash";
 
 export default {
 	mixins: [abstractField],
-
+  name: 'fieldStaticMap',
 	computed: {
 		mapLink() {
 			if (this.value) {

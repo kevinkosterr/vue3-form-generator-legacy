@@ -1,19 +1,46 @@
-<template lang="pug">
-select.form-control(v-model="value", :disabled="disabled || null", :name="schema.inputName", :id="getFieldID(schema)", :class="schema.fieldClasses", v-attributes="'input'")
-		option(v-if="!selectOptions.hideNoneSelectedText", :disabled="schema.required || null", :value="null") {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
+<template>
+  <select
+      class="form-control"
+      v-model="value"
+      :disabled="disabled || null"
+      :name="schema.inputName"
+      :id="getFieldID(schema)"
+      :class="schema.fieldClasses"
+      v-attributes="'input'"
+  >
+    <option
+        v-if="!selectOptions.hideNoneSelectedText"
+        :disabled="schema.required || null"
+        :value="null"
+    >
+      {{ selectOptions.noneSelectedText || "&lt;Nothing selected&gt;" }}
+    </option>
 
-		template(v-for="item in items")
-			optgroup(v-if="item.group", :label="getGroupName(item)")
-				option(v-if="item.ops", v-for="i in item.ops", :value="getItemValue(i)") {{ getItemName(i) }}
+    <template v-for="item in items">
+      <optgroup v-if="item.group" :label="getGroupName(item)">
+        <option
+            v-if="item.ops"
+            v-for="i in item.ops"
+            :value="getItemValue(i)"
+        >
+          {{ getItemName(i) }}
+        </option>
+      </optgroup>
 
-			option(v-if="!item.group", :value="getItemValue(item)") {{ getItemName(item) }}
+      <option v-if="!item.group" :value="getItemValue(item)">
+        {{ getItemName(item) }}
+      </option>
+    </template>
+  </select>
 </template>
+
 
 <script>
 import { isObject, isNil, find } from "lodash";
 import abstractField from "../abstractField.js";
 
 export default {
+  name: 'FieldSelect',
 	mixins: [abstractField],
 
 	computed: {

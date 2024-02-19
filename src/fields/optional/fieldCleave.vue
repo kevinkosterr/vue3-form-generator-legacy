@@ -1,6 +1,17 @@
-<template lang="pug">
-input.form-control(type="text", :value="value", :autocomplete="schema.autocomplete", :disabled="disabled || null", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+<template>
+  <input
+      class="form-control"
+      type="text"
+      :value="value"
+      :autocomplete="schema.autocomplete"
+      :disabled="disabled || null"
+      :placeholder="schema.placeholder"
+      :readonly="schema.readonly"
+      :name="schema.inputName"
+      :id="getFieldID(schema)"
+  />
 </template>
+
 
 <script>
 import abstractField from "../abstractField.js";
@@ -8,7 +19,7 @@ import { defaults } from "lodash";
 
 export default {
 	mixins: [abstractField],
-
+  name: 'FieldCleave',
 	data() {
 		return {
 			cleave: null

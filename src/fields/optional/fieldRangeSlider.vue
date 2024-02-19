@@ -1,6 +1,17 @@
-<template lang="pug">
-input(type="text", :autocomplete="schema.autocomplete", :data-disable="disabled", :data-max="schema.max", :data-min="schema.min", :data-step="schema.step", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName")
+<template>
+  <input
+      type="text"
+      :autocomplete="schema.autocomplete"
+      :data-disable="disabled"
+      :data-max="schema.max"
+      :data-min="schema.min"
+      :data-step="schema.step"
+      :placeholder="schema.placeholder"
+      :readonly="schema.readonly"
+      :name="schema.inputName"
+  />
 </template>
+
 
 <script>
 /* global $ */
@@ -9,7 +20,7 @@ import { defaults, isArray } from "lodash";
 
 export default {
 	mixins: [abstractField],
-
+  name: 'fieldRangeSlider',
 	data() {
 		return {
 			slider: null

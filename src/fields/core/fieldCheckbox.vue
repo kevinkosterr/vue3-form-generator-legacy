@@ -1,11 +1,22 @@
-<template lang="pug">
-input(:id="getFieldID(schema)", type="checkbox", v-model="value", :autocomplete="schema.autocomplete", :disabled="disabled || null", :name="schema.inputName", :class="schema.fieldClasses", :required="schema.required", v-attributes="'input'")
+<template>
+  <input
+      :id="getFieldID(schema)"
+      type="checkbox"
+      v-model="value"
+      :autocomplete="schema.autocomplete"
+      :disabled="disabled || null"
+      :name="schema.inputName"
+      :class="schema.fieldClasses"
+      :required="schema.required"
+      v-attributes="'input'"
+  />
 </template>
 
 <script>
 import abstractField from "../abstractField.js";
 
 export default {
+  name: 'FieldCheckbox',
 	mixins: [abstractField]
 };
 </script>

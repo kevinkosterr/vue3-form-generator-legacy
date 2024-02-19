@@ -1,11 +1,18 @@
-<template lang="pug">
-span(:id="getFieldID(schema)", :class="schema.fieldClasses", v-attributes="'label'") {{ value }}
+<template>
+  <span
+      :id="getFieldID(schema)"
+      :class="schema.fieldClasses"
+      v-attributes="'label'"
+  >
+    {{ value }}
+  </span>
 </template>
 
 <script>
 import abstractField from "../abstractField.js";
 
 export default {
+  name: 'FieldLabel',
 	mixins: [abstractField]
 };
 </script>

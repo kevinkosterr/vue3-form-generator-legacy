@@ -1,17 +1,20 @@
-<template lang="pug">
-.wrapper(v-attributes="'wrapper'")
-	input.form-control(
-		:id="getFieldID(schema)",
-		type="file",
-		:name="schema.inputName",
-		@change="onChange",
-		:accept="schema.accept",
-		:multiple="schema.multiple",
-		:placeholder="schema.placeholder",
-		:readonly="schema.readonly",
-		:required="schema.required",
-		:disabled="disabled || null",
-		v-attributes="'input'")
+<template>
+  <div class="wrapper" v-attributes="'wrapper'">
+    <input
+        class="form-control"
+        :id="getFieldID(schema)"
+        type="file"
+        :name="schema.inputName"
+        @change="onChange"
+        :accept="schema.accept"
+        :multiple="schema.multiple"
+        :placeholder="schema.placeholder"
+        :readonly="schema.readonly"
+        :required="schema.required"
+        :disabled="disabled || null"
+        v-attributes="'input'"
+    />
+  </div>
 </template>
 
 <script>
@@ -19,6 +22,7 @@ import abstractField from "../abstractField.js";
 import { isFunction } from "lodash";
 
 export default {
+  name: 'FieldUpload',
 	mixins: [abstractField],
 	methods: {
 		onChange($event){

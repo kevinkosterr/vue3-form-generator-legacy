@@ -1,16 +1,34 @@
-<template lang="pug">
-.radio-list(:disabled="disabled || null", v-attributes="'wrapper'")
-		label(v-for="item in items", :class="getItemCssClasses(item)", v-attributes="'label'")
-			input(:id="getFieldID(schema, true)", type="radio", :disabled="isItemDisabled(item) || null", :name="id", @click="onSelection(item)", :value="getItemValue(item)", :checked="isItemChecked(item) || null", :class="schema.fieldClasses", :required="schema.required", v-attributes="'input'")
-			| {{ getItemName(item) }}
-
+<template>
+  <div class="radio-list" :disabled="disabled || null" v-attributes="'wrapper'">
+    <label
+        v-for="item in items"
+        :class="getItemCssClasses(item)"
+        v-attributes="'label'"
+    >
+      <input
+          :id="getFieldID(schema, true)"
+          type="radio"
+          :disabled="isItemDisabled(item) || null"
+          :name="id"
+          @click="onSelection(item)"
+          :value="getItemValue(item)"
+          :checked="isItemChecked(item) || null"
+          :class="schema.fieldClasses"
+          :required="schema.required"
+          v-attributes="'input'"
+      />
+      {{ getItemName(item) }}
+    </label>
+  </div>
 </template>
+
 
 <script>
 import { isObject, isFunction, get as objGet } from "lodash";
 import abstractField from "../abstractField.js";
 
 export default {
+  name: 'FieldRadios',
 	mixins: [abstractField],
 
 	computed: {

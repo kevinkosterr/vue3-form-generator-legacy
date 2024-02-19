@@ -8,7 +8,7 @@ import { isArray, defaults } from "lodash";
 
 export default {
 	mixins: [abstractField],
-
+  name: 'fieldNoUiSlider',
 	data() {
 		return {
 			slider: null

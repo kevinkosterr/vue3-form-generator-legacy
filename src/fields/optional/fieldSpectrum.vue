@@ -1,6 +1,15 @@
-<template lang="pug">
-input(type="text", :autocomplete="schema.autocomplete", :disabled="disabled || null", :placeholder="schema.placeholder", :readonly="schema.readonly", :name="schema.inputName", :id="getFieldID(schema)")
+<template>
+  <input
+      type="text"
+      :autocomplete="schema.autocomplete"
+      :disabled="disabled || null"
+      :placeholder="schema.placeholder"
+      :readonly="schema.readonly"
+      :name="schema.inputName"
+      :id="getFieldID(schema)"
+  />
 </template>
+
 
 <script>
 /* global $ */
@@ -8,7 +17,7 @@ import abstractField from "../abstractField.js";
 import { defaults } from "lodash";
 export default {
 	mixins: [abstractField],
-
+  name: 'fieldSpectrum',
 	data() {
 		return {
 			picker: null

@@ -1,8 +1,30 @@
-<template lang="pug">
-select.selectpicker(v-model="value", :disabled="disabled || null", :multiple="schema.multiSelect", :title="schema.placeholder", data-width="100%", :name="schema.inputName")
-		option(:disabled="schema.required || null", v-if="schema.multiSelect !== true", :value="null", :selected="value == undefined")
-		option(v-for="item in items", :value="getItemValue(item)") {{ getItemName(item) }}
+<template>
+  <select
+      class="selectpicker"
+      v-model="value"
+      :disabled="disabled || null"
+      :multiple="schema.multiSelect"
+      :title="schema.placeholder"
+      data-width="100%"
+      :name="schema.inputName"
+  >
+    <option
+        v-if="schema.multiSelect !== true"
+        :disabled="schema.required || null"
+        :value="null"
+        :selected="value == undefined"
+    ></option>
+
+    <option
+        v-for="item in items"
+        :key="getItemValue(item)"
+        :value="getItemValue(item)"
+    >
+      {{ getItemName(item) }}
+    </option>
+  </select>
 </template>
+
 
 <script>
 /* global $ */
@@ -11,7 +33,7 @@ import abstractField from "../abstractField.js";
 
 export default {
 	mixins: [abstractField],
-
+  name: 'fieldSelectEx',
 	computed: {
 		items() {
 			let values = this.schema.values;

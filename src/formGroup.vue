@@ -9,16 +9,16 @@
 		</label>
 
 		<div class="field-wrap">
-			<component v-bind="$attrs" ref="child" :is="getFieldType(field)" :vfg="vfg" :disabled="fieldDisabled(field) || null" :model="model" :schema="field" :formOptions="options" @modelUpdated="onModelUpdated" @validated="onFieldValidated"/>
+			<component v-bind="getAttributes($attrs)" ref="child" :is="getFieldType(field)" :vfg="vfg || null" :disabled="fieldDisabled(field) || null" :model="model" :schema="field || null" :formOptions="options || null" @modelUpdated="onModelUpdated" @validated="onFieldValidated"/>
 			<div v-if="buttonVisibility(field)" class="buttons">
-				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes" :key="index" v-text="btn.label" :type="getButtonType(btn)"></button>
+				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes || ''" :key="index" v-text="btn.label" :type="getButtonType(btn)"></button>
 			</div>
 		</div>
 
-		<div v-if="field.hint" class="hint" v-html="fieldHint(field)"></div>
+		<div v-if="field.hint" class="hint" v-html="fieldHint(field) || ''"></div>
 
 		<div v-if="fieldErrors(field).length > 0" class="errors help-block">
-			<span v-for="(error, index) in fieldErrors(field)" :key="index" v-html="error"></span>
+			<span v-for="(error, index) in fieldErrors(field)" :key="index" v-html="error || ''"></span>
 		</div>
 	</div>
   </template>
@@ -59,6 +59,19 @@
       },
       methods: {
         // Should field type have a label?
+        getAttributes(attrs) {
+          const res = {}
+          for(let key in attrs) {
+            if (attrs.hasOwnProperty(key)) {
+              if (attrs[key]) {
+                if (typeof attrs[key] !== 'function') {
+                  res[key] = attrs[key]
+                }
+              }
+            }
+          }
+          return res
+        },
         fieldTypeHasLabel(field) {
           if (isNil(field.label)) return false;
 

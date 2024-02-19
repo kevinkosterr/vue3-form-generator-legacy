@@ -1,22 +1,55 @@
-<template lang="pug">
-.wrapper(v-attributes="'wrapper'")
-		.listbox.form-control(v-if="schema.listBox", :disabled="disabled || null")
-			.list-row(v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
-				label
-					input(:id="getFieldID(schema, true)", type="checkbox", :checked="isItemChecked(item) || null", :disabled="disabled || null", @change="onChanged($event, item)", :name="getInputName(item)", v-attributes="'input'")
-					| {{ getItemName(item) }}
+<template>
+  <div class="wrapper" v-attributes="'wrapper'">
+    <div v-if="schema.listBox" class="listbox form-control" :disabled="disabled || null">
+      <div v-for="item in items" class="list-row" :class="{'is-checked': isItemChecked(item)}">
+        <label>
+          <input
+              :id="getFieldID(schema, true)"
+              type="checkbox"
+              :checked="isItemChecked(item) || null"
+              :disabled="disabled || null"
+              @change="onChanged($event, item)"
+              :name="getInputName(item)"
+              v-attributes="'input'"
+          />
+          {{ getItemName(item) }}
+        </label>
+      </div>
+    </div>
 
-		.combobox.form-control(v-if="!schema.listBox", :disabled="disabled || null")
-			.mainRow(@click="onExpandCombo", :class="{ expanded: comboExpanded }")
-				.info {{ selectedCount }} selected
-				.arrow
+    <div v-if="!schema.listBox" class="combobox form-control" :disabled="disabled || null">
+      <div class="mainRow" @click="onExpandCombo" :class="{ expanded: comboExpanded }">
+        <div class="info">
+          {{ selectedCount }} selected
+        </div>
+        <div class="arrow"></div>
+      </div>
 
-			.dropList
-				.list-row(v-if="comboExpanded", v-for="item in items", :class="{'is-checked': isItemChecked(item)}")
-					label
-						input(:id="getFieldID(schema, true)", type="checkbox", :checked="isItemChecked(item) || null", :disabled="disabled || null", @change="onChanged($event, item)", :name="getInputName(item)", v-attributes="'input'")
-						| {{ getItemName(item) }}
+      <div class="dropList">
+        <div
+            v-if="comboExpanded"
+            v-for="item in items"
+            class="list-row"
+            :class="{'is-checked': isItemChecked(item)}"
+        >
+          <label>
+            <input
+                :id="getFieldID(schema, true)"
+                type="checkbox"
+                :checked="isItemChecked(item) || null"
+                :disabled="disabled || null"
+                @change="onChanged($event, item)"
+                :name="getInputName(item)"
+                v-attributes="'input'"
+            />
+            {{ getItemName(item) }}
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
+
 
 <script>
 import { isObject, isNil, clone } from "lodash";
@@ -24,6 +57,7 @@ import abstractField from "../abstractField.js";
 import { slugify } from "../../utils/schema";
 
 export default {
+  name: 'FieldChecklist',
 	mixins: [abstractField],
 
 	data() {

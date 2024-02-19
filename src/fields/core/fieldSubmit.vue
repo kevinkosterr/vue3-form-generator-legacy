@@ -1,6 +1,15 @@
-<template lang="pug">
-input(:id="getFieldID(schema)", type="submit", :value="schema.buttonText", @click="onClick", :name="schema.inputName", :disabled="disabled || null", :class="schema.fieldClasses")
+<template>
+  <input
+      :id="getFieldID(schema)"
+      type="submit"
+      :value="schema.buttonText"
+      @click="onClick"
+      :name="schema.inputName"
+      :disabled="disabled || null"
+      :class="schema.fieldClasses"
+  />
 </template>
+
 
 <script>
 import abstractField from "../abstractField.js";
@@ -8,7 +17,7 @@ import { get as objGet, isFunction, isEmpty } from "lodash";
 
 export default {
 	mixins: [abstractField],
-
+  name: 'FieldSubmit',
 	methods: {
 		onClick($event) {
 			if (this.schema.validateBeforeSubmit === true) {

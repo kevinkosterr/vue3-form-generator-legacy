@@ -1,55 +1,55 @@
-<template lang="pug">
-multiselect(
-		:id="selectOptions.id",
-		:options="options",
-		:value="value",
-		:multiple="selectOptions.multiple",
-		:track-by="selectOptions.trackBy || null",
-		:label="selectOptions.label || null",
-		:searchable="selectOptions.searchable",
-		:clear-on-select="selectOptions.clearOnSelect",
-		:hide-selected="selectOptions.hideSelected",
-		:placeholder="schema.placeholder",
-		:allow-empty="selectOptions.allowEmpty",
-		:reset-after="selectOptions.resetAfter",
-		:close-on-select="selectOptions.closeOnSelect",
-		:custom-label="customLabel",
-		:taggable="selectOptions.taggable",
-		:tag-placeholder="selectOptions.tagPlaceholder",
-		:max="schema.max || null",
-		:options-limit="selectOptions.optionsLimit",
-		:group-values="selectOptions.groupValues",
-		:group-label="selectOptions.groupLabel",
-		:block-keys="selectOptions.blockKeys",
-		:internal-search="selectOptions.internalSearch",
-		:select-label="selectOptions.selectLabel",
-		:selected-label="selectOptions.selectedLabel",
-		:deselect-label="selectOptions.deselectLabel",
-		:show-labels="selectOptions.showLabels",
-		:limit="selectOptions.limit",
-		:limit-text="selectOptions.limitText",
-		:loading="selectOptions.loading",
-		:disabled="disabled || null",
-		:max-height="selectOptions.maxHeight",
-		:show-pointer="selectOptions.showPointer",
-		@input="updateSelected",
-		@select="onSelect",
-		@remove="onRemove",
-		@search-change="onSearchChange",
-		@tag="addTag",
-		@open="onOpen",
-		@close="onClose",
-		:option-height="selectOptions.optionHeight",
-	)
-		span(slot="noResult").
-			{{ selectOptions.noResult }}
-		span(slot="maxElements").
-			{{ selectOptions.maxElements }}
+<template>
+  <multiselect
+      :id="selectOptions.id"
+      :options="options"
+      :value="value"
+      :multiple="selectOptions.multiple"
+      :track-by="selectOptions.trackBy || null"
+      :label="selectOptions.label || null"
+      :searchable="selectOptions.searchable"
+      :clear-on-select="selectOptions.clearOnSelect"
+      :hide-selected="selectOptions.hideSelected"
+      :placeholder="schema.placeholder"
+      :allow-empty="selectOptions.allowEmpty"
+      :reset-after="selectOptions.resetAfter"
+      :close-on-select="selectOptions.closeOnSelect"
+      :custom-label="customLabel"
+      :taggable="selectOptions.taggable"
+      :tag-placeholder="selectOptions.tagPlaceholder"
+      :max="schema.max || null"
+      :options-limit="selectOptions.optionsLimit"
+      :group-values="selectOptions.groupValues"
+      :group-label="selectOptions.groupLabel"
+      :block-keys="selectOptions.blockKeys"
+      :internal-search="selectOptions.internalSearch"
+      :select-label="selectOptions.selectLabel"
+      :selected-label="selectOptions.selectedLabel"
+      :deselect-label="selectOptions.deselectLabel"
+      :show-labels="selectOptions.showLabels"
+      :limit="selectOptions.limit"
+      :limit-text="selectOptions.limitText"
+      :loading="selectOptions.loading"
+      :disabled="disabled || null"
+      :max-height="selectOptions.maxHeight"
+      :show-pointer="selectOptions.showPointer"
+      @input="updateSelected"
+      @select="onSelect"
+      @remove="onRemove"
+      @search-change="onSearchChange"
+      @tag="addTag"
+      @open="onOpen"
+      @close="onClose"
+      :option-height="selectOptions.optionHeight"
+  >
+    <span slot="noResult">{{ selectOptions.noResult }}</span>
+    <span slot="maxElements">{{ selectOptions.maxElements }}</span>
+  </multiselect>
 </template>
 <script>
 import abstractField from "../abstractField.js";
 
 export default {
+  name: 'fieldVueMultiSelect',
 	mixins: [abstractField],
 	computed: {
 		selectOptions() {
