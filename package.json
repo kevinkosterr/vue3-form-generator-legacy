@@ -1,5 +1,5 @@
 {
-  "name": "vue3-form-generator",
+  "name": "@kevinkosterr/vue3-form-generator-legacy",
   "private": false,
   "version": "1.0.17",
   "type": "module",
@@ -7,7 +7,7 @@
   "module": "./dist/umd.js",
   "repository": {
     "type": "git",
-    "url": "https://gitlab.com/nick7dam/vue3-form-generator"
+    "url": "https://github.com/kevinkosterr/vue3-form-generator-legacy"
   },
   "scripts": {
     "dev": "vite",
