@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    App: typeof import('./src/App.vue')['default']
     FieldCheckbox: typeof import('./src/fields/core/fieldCheckbox.vue')['default']
     FieldChecklist: typeof import('./src/fields/core/fieldChecklist.vue')['default']
     FieldCleave: typeof import('./src/fields/optional/fieldCleave.vue')['default']

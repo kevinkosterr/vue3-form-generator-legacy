@@ -139,7 +139,7 @@ export default {
       return field.hint
     },
     fieldErrors(field) {
-      return this.errors.filter((e) => e.field.fieldName === field.fieldName).map((item) => item.error)
+      return this.errors.filter((e) => e.field.model === field.model).map((item) => item.error)
     },
     onModelUpdated(newVal, schema) {
       this.$emit('modelUpdated', newVal, schema)
