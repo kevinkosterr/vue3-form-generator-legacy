@@ -18,13 +18,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: yarn install --immutable
-      - name: Running tests
-        run: yarn run test
+      - run: npm install
       - name: Building
-        run: yarn run build
+        run: npm run build
       - name: Running audit
-        run: yarn audit signatures
+        run: npm audit signatures
       - name: Semantic release
         run: npx semantic-release
         env:
