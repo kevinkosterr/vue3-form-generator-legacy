@@ -130,8 +130,12 @@ export default {
         if (newModel != null) {
           this.$nextTick(() => {
             // Model changed!
-            if (this.options.validateAfterLoad === true && this.isNewModel !== true) {
-              this.validate()
+            if (this.options.validateAfterLoad && this.isNewModel !== true) {
+              if (Array.isArray(this.options.validateAfterLoad)) {
+                this.validateModelField(this.options.validateAfterLoad)
+              } else {
+                this.validate()
+              }
             } else {
               this.clearValidationErrors()
             }
@@ -185,6 +189,31 @@ export default {
 
     onModelUpdated(newVal, schema) {
       this.$emit('modelUpdated', newVal, schema)
+    },
+
+    /** Validate one or more model properties */
+    validateModelField (model) {
+      /** Determine if the child can and should be validated. */
+      const toValidate = (child) => isFunction(child.validate) && model.includes(child.field.model)
+
+      this.$refs.children.forEach(child => {
+        if (toValidate(child)) {
+          child.validate().then((errors) => {
+            if (errors[0]) {
+              Object.keys(this.errors)
+                .filter((key) => {
+                  return this.errors[key].field.model === child.field.model
+                })
+                .forEach(key => delete this.errors[key])
+
+              this.errors.push({
+                field: child.field,
+                error: error[0]
+              })
+            }
+          }).bind(this)
+        }
+      })
     },
 
     // Validating the model properties
