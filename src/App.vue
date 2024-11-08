@@ -1,5 +1,5 @@
 <script setup>
-import { FieldCheckbox } from './components/';
+import { FieldCheckbox } from './components/'
 </script>
 
 <template>

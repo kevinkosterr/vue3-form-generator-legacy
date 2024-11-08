@@ -1,47 +1,47 @@
 <template>
   <label>
     <input
-        type="checkbox"
-        v-model="value"
-        :autocomplete="schema.autocomplete"
-        :disabled="disabled || null"
-        :name="schema.inputName"
-        :id="getFieldID(schema)"
-    />
+      :id="getFieldID(schema)"
+      v-model="value"
+      type="checkbox"
+      :autocomplete="schema.autocomplete"
+      :disabled="disabled || null"
+      :name="schema.inputName"
+    >
     <span
-        class="label"
-        :data-on="schema.textOn || 'On'"
-        :data-off="schema.textOff || 'Off'"
-        :for="getFieldID(schema)"
-    ></span>
-    <span class="handle"></span>
+      class="label"
+      :data-on="schema.textOn || 'On'"
+      :data-off="schema.textOff || 'Off'"
+      :for="getFieldID(schema)"
+    />
+    <span class="handle" />
   </label>
 </template>
 
 
 <script>
-import abstractField from "../abstractField.js";
+import abstractField from '../abstractField.js'
 
 export default {
-	mixins: [abstractField],
-  name: 'fieldSwitch',
-	methods: {
-		formatValueToField(value) {
-			if (value != null && this.schema.valueOn) return value === this.schema.valueOn;
+  name: 'FieldSwitch',
+  mixins: [ abstractField ],
+  methods: {
+    formatValueToField(value) {
+      if (value != null && this.schema.valueOn) return value === this.schema.valueOn
 
-			return value;
-		},
+      return value
+    },
 
-		formatValueToModel(value) {
-			if (value != null && this.schema.valueOn) {
-				if (value) return this.schema.valueOn;
-				else return this.schema.valueOff;
-			}
+    formatValueToModel(value) {
+      if (value != null && this.schema.valueOn) {
+        if (value) return this.schema.valueOn
+        else return this.schema.valueOff
+      }
 
-			return value;
-		}
-	}
-};
+      return value
+    }
+  }
+}
 </script>
 
 <style lang="scss">

@@ -1,92 +1,92 @@
 <template>
   <div class="wrapper">
     <input
-        class="form-control link"
-        type="text"
-        v-show="schema.hideInput !== true"
-        v-model="wrappedValue"
-        :autocomplete="schema.autocomplete"
-        :disabled="disabled || null"
-        :placeholder="schema.placeholder"
-        :readonly="schema.readonly"
-    />
+      v-show="schema.hideInput !== true"
+      v-model="wrappedValue"
+      class="form-control link"
+      type="text"
+      :autocomplete="schema.autocomplete"
+      :disabled="disabled || null"
+      :placeholder="schema.placeholder"
+      :readonly="schema.readonly"
+    >
     <input
-        class="form-control file"
-        type="file"
-        v-if="schema.browse !== false"
-        :disabled="disabled || null"
-        @change="fileChanged"
-        :name="schema.inputName"
-    />
+      v-if="schema.browse !== false"
+      class="form-control file"
+      type="file"
+      :disabled="disabled || null"
+      :name="schema.inputName"
+      @change="fileChanged"
+    >
     <div class="preview" :style="previewStyle">
-      <div class="remove" title="Remove image" @click="remove"></div>
+      <div class="remove" title="Remove image" @click="remove" />
     </div>
   </div>
 </template>
 
 
 <script>
-import abstractField from "../abstractField.js";
+import abstractField from '../abstractField.js'
 
 export default {
-	mixins: [abstractField],
   name: 'FieldImage',
-	computed: {
-		previewStyle() {
-			if (this.schema.preview !== false) {
-				return {
-					display: "block",
-					"background-image": this.value != null ? "url(" + this.value + ")" : "none"
-				};
-			} else {
-				return {
-					display: "none"
-				};
-			}
-		},
+  mixins: [ abstractField ],
+  computed: {
+    previewStyle() {
+      if (this.schema.preview !== false) {
+        return {
+          'display': 'block',
+          'background-image': this.value != null ? 'url(' + this.value + ')' : 'none'
+        }
+      } else {
+        return {
+          display: 'none'
+        }
+      }
+    },
 
-		wrappedValue: {
-			get() {
-				if (this.value && this.value.indexOf("data") === 0) return "<inline base64 image>";
-				else return this.value;
-			},
-			set(newValue) {
-				if (newValue && newValue.indexOf("http") === 0) {
-					this.value = newValue;
-				}
-			}
-		}
-	},
-
-	watch: {
-		model: {
-      deep: true,
-      handler() {
-        let el = this.$el.querySelector("input.file");
-        if(el) {
-          el.value = "";
+    wrappedValue: {
+      get() {
+        if (this.value && this.value.indexOf('data') === 0) return '<inline base64 image>'
+        else return this.value
+      },
+      set(newValue) {
+        if (newValue && newValue.indexOf('http') === 0) {
+          this.value = newValue
         }
       }
     }
-	},
+  },
 
-	methods: {
-		remove() {
-			this.value = "";
-		},
+  watch: {
+    model: {
+      deep: true,
+      handler() {
+        let el = this.$el.querySelector('input.file')
+        if(el) {
+          el.value = ''
+        }
+      }
+    }
+  },
 
-		fileChanged(event) {
-			let reader = new FileReader();
-			reader.onload = e => {
-				this.value = e.target.result;
-			};
+  methods: {
+    remove() {
+      this.value = ''
+    },
 
-			if (event.target.files && event.target.files.length > 0) {
-				reader.readAsDataURL(event.target.files[0]);
-			}
-		}
-	}
-};
+    fileChanged(event) {
+      let reader = new FileReader()
+      reader.onload = e => {
+        this.value = e.target.result
+      }
+
+      if (event.target.files && event.target.files.length > 0) {
+        reader.readAsDataURL(event.target.files[0])
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss">

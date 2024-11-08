@@ -1,45 +1,46 @@
 <template>
-  <img :src="mapLink" />
+  <img :src="mapLink">
 </template>
 
 
 <script>
-import abstractField from "../abstractField.js";
-import { defaults } from "lodash";
+import abstractField from '../abstractField.js'
+import { defaults } from 'lodash'
 
 export default {
-	mixins: [abstractField],
-  name: 'fieldStaticMap',
-	computed: {
-		mapLink() {
-			if (this.value) {
-				let lat, lng;
-				let options = defaults(this.schema.staticMapOptions || {}, {
-					lat: "lat",
-					lng: "lng",
-					zoom: 8,
-					sizeX: 640,
-					sizeY: 640
-				});
+  name: 'FieldStaticMap',
+  mixins: [ abstractField ],
+  computed: {
+    mapLink() {
+      if (this.value) {
+        let lat, lng
+        let options = defaults(this.schema.staticMapOptions || {}, {
+          lat: 'lat',
+          lng: 'lng',
+          zoom: 8,
+          sizeX: 640,
+          sizeY: 640
+        })
 
-				lat = this.value[options.lat];
-				lng = this.value[options.lng];
+        lat = this.value[options.lat]
+        lng = this.value[options.lng]
 
-				let url = `http://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${options.zoom}&size=${options.sizeX}x${options.sizeY}`;
+        let url = `http://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=${options.zoom}&size=${options.sizeX}x${options.sizeY}`
 
-				let props = ["scale", "format", "maptype", "language", "region", "markers", "path", "visible", "style", "key", "signature"];
-				for (let prop of props) {
-					if (typeof options[prop] !== "undefined") {
-						url += `&${prop}=${options[prop]}`;
-					}
-				}
-				if (lat && lng) {
-					return url;
-				}
-			}
-		}
-	}
-};
+        let props = [ 'scale', 'format', 'maptype', 'language', 'region', 'markers', 'path', 'visible', 'style', 'key', 'signature' ]
+        for (let prop of props) {
+          if (typeof options[prop] !== 'undefined') {
+            url += `&${prop}=${options[prop]}`
+          }
+        }
+        if (lat && lng) {
+          return url
+        }
+      }
+      return ''
+    }
+  }
+}
 </script>
 
 <style lang="scss">

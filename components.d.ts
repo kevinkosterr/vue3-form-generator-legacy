@@ -32,6 +32,5 @@ declare module 'vue' {
     FieldVueMultiSelect: typeof import('./src/fields/optional/fieldVueMultiSelect.vue')['default']
     FormGenerator: typeof import('./src/formGenerator.vue')['default']
     FormGroup: typeof import('./src/formGroup.vue')['default']
-    FormMixin: typeof import('./src/formMixin.vue')['default']
   }
 }

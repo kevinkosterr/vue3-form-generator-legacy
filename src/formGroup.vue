@@ -1,141 +1,160 @@
 <template>
-	<div class="form-group" :class="getFieldRowClasses(field)">
-		<label v-if="fieldTypeHasLabel(field)" :for="getFieldID(field)" :class="field.labelClasses">
-			<span v-html="field.label"></span>
-			<span v-if='field.help' class="help">
-				<i class="icon"/>
-				<div class="helpText" v-html='field.help'></div>
-			</span>
-		</label>
+  <div class="form-group" :class="getFieldRowClasses(field)">
+    <label v-if="fieldTypeHasLabel(field)" :for="getFieldID(field)" :class="field.labelClasses">
+      <span>{{ field.label }}</span>
+      <span v-if="field.help" class="help">
+        <i class="icon" />
+        <div class="helpText">{{ field.help }}</div>
+      </span>
+    </label>
 
-		<div class="field-wrap">
-			<component v-bind="getAttributes($attrs)" ref="child" :is="getFieldType(field)" :vfg="vfg || null" :disabled="fieldDisabled(field) || null" :model="model" :schema="field || null" :formOptions="options || null" @modelUpdated="onModelUpdated" @validated="onFieldValidated"/>
-			<div v-if="buttonVisibility(field)" class="buttons">
-				<button v-for="(btn, index) in field.buttons" @click="buttonClickHandler(btn, field, $event)" :class="btn.classes || ''" :key="index" v-text="btn.label" :type="getButtonType(btn)"></button>
-			</div>
-		</div>
+    <div class="field-wrap">
+      <component
+        v-bind="getAttributes($attrs)"
+        :is="getFieldType(field)"
+        ref="child"
+        :vfg="vfg || null"
+        :disabled="fieldDisabled(field) || null"
+        :model="model"
+        :schema="field || null"
+        :form-options="options || null"
+        @model-updated="onModelUpdated"
+        @validated="onFieldValidated"
+      />
+      <div v-if="buttonVisibility(field)" class="buttons">
+        <button
+          v-for="(btn, index) in field.buttons"
+          :key="index"
+          :class="btn.classes || ''"
+          :type="getButtonType(btn)" @click="buttonClickHandler(btn, field, $event)"
+          v-text="btn.label"
+        />
+      </div>
+    </div>
 
-		<div v-if="field.hint" class="hint" v-html="fieldHint(field) || ''"></div>
+    <div v-if="field.hint" class="hint">
+      {{ fieldHint(field) || '' }}
+    </div>
 
-		<div v-if="fieldErrors(field).length > 0" class="errors help-block">
-			<span v-for="(error, index) in fieldErrors(field)" :key="index" v-html="error || ''"></span>
-		</div>
-	</div>
-  </template>
-  <script>
-    import { get as objGet, isNil, isFunction } from "lodash";
-    import { slugifyFormID } from "./utils/schema";
-    import formMixin from "./formMixin.vue";
-    import * as fieldComponents from "./utils/fieldsLoader";
-    import { ref } from "vue";
-    export default {
-      name: "form-group",
-      components: fieldComponents,
-      mixins: [formMixin],
-      props: {
-        vfg: {
-          type: Object,
-          required: true
-        },
-        model: Object,
-        options: {
-          type: Object
-        },
-        field: {
-          type: Object,
-          required: true
-        },
-        errors: {
-          type: Array,
-          default() {
-            return [];
-          }
-        }
-      },
-      data() {
-        return {
-          child: ref()
-        }
-      },
-      methods: {
-        // Should field type have a label?
-        getAttributes(attrs) {
-          const res = {}
-          for(let key in attrs) {
-            if (attrs.hasOwnProperty(key)) {
-              if (attrs[key]) {
-                if (typeof attrs[key] !== 'function') {
-                  res[key] = attrs[key]
-                }
-              }
+    <div v-if="fieldErrors(field).length > 0" class="errors help-block">
+      <span v-for="(error, index) in fieldErrors(field)" :key="index">{{ error }}</span>
+    </div>
+  </div>
+</template>
+<script>
+import { get as objGet, isNil, isFunction } from 'lodash'
+import { slugifyFormID } from './utils/schema'
+import formMixin from './formMixin.js'
+import * as fieldComponents from './utils/fieldsLoader'
+import { ref } from 'vue'
+export default {
+  name: 'FormGroup',
+  components: fieldComponents,
+  mixins: [ formMixin ],
+  props: {
+    vfg: {
+      type: Object,
+      required: true
+    },
+    model: Object,
+    options: {
+      type: Object
+    },
+    field: {
+      type: Object,
+      required: true
+    },
+    errors: {
+      type: Array,
+      default() {
+        return []
+      }
+    }
+  },
+  data() {
+    return {
+      child: ref()
+    }
+  },
+  methods: {
+    // Should field type have a label?
+    getAttributes(attrs) {
+      const res = {}
+      for(let key in attrs) {
+        if (attrs.hasOwnProperty(key)) {
+          if (attrs[key]) {
+            if (typeof attrs[key] !== 'function') {
+              res[key] = attrs[key]
             }
-          }
-          return res
-        },
-        fieldTypeHasLabel(field) {
-          if (isNil(field.label)) return false;
-
-          let relevantType = "";
-          if (field.type === "input") {
-            relevantType = field.inputType;
-          } else {
-            relevantType = field.type;
-          }
-
-          switch (relevantType) {
-            case "button":
-            case "submit":
-            case "reset":
-              return false;
-            default:
-              return true;
-          }
-        },
-        getFieldID(schema) {
-          const idPrefix = objGet(this.options, "fieldIdPrefix", "");
-          return slugifyFormID(schema, idPrefix);
-        },
-        // Get type of field 'field-xxx'. It'll be the name of HTML element
-        getFieldType(fieldSchema) {
-          return "field-" + fieldSchema.type;
-        },
-        // Get type of button, default to 'button'
-        getButtonType(btn) {
-          return objGet(btn, "type", "button");
-        },
-        // Child field executed validation
-        onFieldValidated(res, errors, field) {
-          this.$emit("validated", res, errors, field);
-        },
-        buttonVisibility(field) {
-          return field.buttons && field.buttons.length > 0;
-        },
-        buttonClickHandler(btn, field, event) {
-          return btn.onclick.call(this, this.model, field, event, this);
-        },
-        // Get current hint.
-        fieldHint(field) {
-          if (isFunction(field.hint)) return field.hint.call(this, this.model, field, this);
-
-          return field.hint;
-        },
-        fieldErrors(field) {
-          return this.errors.filter((e) => e.field.fieldName === field.fieldName).map((item) => item.error);
-        },
-        onModelUpdated(newVal, schema) {
-          this.$emit("modelUpdated", newVal, schema);
-        },
-        validate(calledParent) {
-          return this.$refs.child.validate(calledParent);
-        },
-        clearValidationErrors() {
-          if (this.$refs.child) {
-            return this.$refs.child.clearValidationErrors();
           }
         }
       }
-    };
-  </script>
+      return res
+    },
+    fieldTypeHasLabel(field) {
+      if (isNil(field.label)) return false
+
+      let relevantType = ''
+      if (field.type === 'input') {
+        relevantType = field.inputType
+      } else {
+        relevantType = field.type
+      }
+
+      switch (relevantType) {
+        case 'button':
+        case 'submit':
+        case 'reset':
+          return false
+        default:
+          return true
+      }
+    },
+    getFieldID(schema) {
+      const idPrefix = objGet(this.options, 'fieldIdPrefix', '')
+      return slugifyFormID(schema, idPrefix)
+    },
+    // Get type of field 'field-xxx'. It'll be the name of HTML element
+    getFieldType(fieldSchema) {
+      return 'field-' + fieldSchema.type
+    },
+    // Get type of button, default to 'button'
+    getButtonType(btn) {
+      return objGet(btn, 'type', 'button')
+    },
+    // Child field executed validation
+    onFieldValidated(res, errors, field) {
+      this.$emit('validated', res, errors, field)
+    },
+    buttonVisibility(field) {
+      return field.buttons && field.buttons.length > 0
+    },
+    buttonClickHandler(btn, field, event) {
+      return btn.onclick.call(this, this.model, field, event, this)
+    },
+    // Get current hint.
+    fieldHint(field) {
+      if (isFunction(field.hint)) return field.hint.call(this, this.model, field, this)
+
+      return field.hint
+    },
+    fieldErrors(field) {
+      return this.errors.filter((e) => e.field.fieldName === field.fieldName).map((item) => item.error)
+    },
+    onModelUpdated(newVal, schema) {
+      this.$emit('modelUpdated', newVal, schema)
+    },
+    validate(calledParent) {
+      return this.$refs.child.validate(calledParent)
+    },
+    clearValidationErrors() {
+      if (this.$refs.child) {
+        return this.$refs.child.clearValidationErrors()
+      }
+    }
+  }
+}
+</script>
 <style lang="scss">
 $errorColor: #f00;
 .form-group:not([class*=" col-"]) {

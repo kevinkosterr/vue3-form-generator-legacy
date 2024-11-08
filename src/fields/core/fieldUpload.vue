@@ -1,38 +1,38 @@
 <template>
-  <div class="wrapper" v-attributes="'wrapper'">
+  <div v-attributes="'wrapper'" class="wrapper">
     <input
-        class="form-control"
-        :id="getFieldID(schema)"
-        type="file"
-        :name="schema.inputName"
-        @change="onChange"
-        :accept="schema.accept"
-        :multiple="schema.multiple"
-        :placeholder="schema.placeholder"
-        :readonly="schema.readonly"
-        :required="schema.required"
-        :disabled="disabled || null"
-        v-attributes="'input'"
-    />
+      :id="getFieldID(schema)"
+      v-attributes="'input'"
+      class="form-control"
+      type="file"
+      :name="schema.inputName"
+      :accept="schema.accept"
+      :multiple="schema.multiple"
+      :placeholder="schema.placeholder"
+      :readonly="schema.readonly"
+      :required="schema.required"
+      :disabled="disabled || null"
+      @change="onChange"
+    >
   </div>
 </template>
 
 <script>
-import abstractField from "../abstractField.js";
-import { isFunction } from "lodash";
+import abstractField from '../abstractField.js'
+import { isFunction } from 'lodash'
 
 export default {
   name: 'FieldUpload',
-	mixins: [abstractField],
-	methods: {
-		onChange($event){
-			if (isFunction(this.schema.onChanged)) {
-				// Schema has defined onChange method.
-				this.schema.onChanged.call(this, this.model, this.schema, $event, this);
-			}
-		}
-	}
-};
+  mixins: [ abstractField ],
+  methods: {
+    onChange($event){
+      if (isFunction(this.schema.onChanged)) {
+        // Schema has defined onChange method.
+        this.schema.onChanged.call(this, this.model, this.schema, $event, this)
+      }
+    }
+  }
+}
 </script>
 
 <style lang="scss">

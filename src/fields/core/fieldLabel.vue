@@ -1,20 +1,20 @@
 <template>
   <span
-      :id="getFieldID(schema)"
-      :class="schema.fieldClasses"
-      v-attributes="'label'"
+    :id="getFieldID(schema)"
+    v-attributes="'label'"
+    :class="schema.fieldClasses"
   >
     {{ value }}
   </span>
 </template>
 
 <script>
-import abstractField from "../abstractField.js";
+import abstractField from '../abstractField.js'
 
 export default {
   name: 'FieldLabel',
-	mixins: [abstractField]
-};
+  mixins: [ abstractField ]
+}
 </script>
 
 <style lang="scss">
