@@ -1,7 +1,7 @@
 {
   "name": "@kevinkosterr/vue3-form-generator-legacy",
   "private": false,
-  "version": "1.0.17",
+  "version": "1.0.18",
   "type": "module",
   "main": "./dist/es.js",
   "module": "./dist/umd.js",
