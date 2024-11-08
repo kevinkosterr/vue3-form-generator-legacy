@@ -26,6 +26,8 @@
     "./dist/style.css": "./dist/style.css"
   },
   "devDependencies": {
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^11.0.1",
     "@stylistic/eslint-plugin": "^2.10.1",
     "@types/lodash": "^4.14.197",
     "@typescript-eslint/parser": "^8.13.0",
@@ -36,6 +38,7 @@
     "lodash": "^4.17.21",
     "requirejs": "2.3.7",
     "sass": "^1.53.0",
+    "semantic-release": "^24.2.0",
     "typescript": "^4.6.4",
     "typescript-eslint": "^8.13.0",
     "unplugin-vue-components": "^0.25.1",
