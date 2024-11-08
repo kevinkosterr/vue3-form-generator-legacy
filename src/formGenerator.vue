@@ -211,7 +211,7 @@ export default {
                 error: error[0]
               })
             }
-          }).bind(this)
+          })
         }
       })
     },
