@@ -1,12 +1,13 @@
 # vue3-form-generator [![NPM version](https://img.shields.io/npm/v/vue-form-generator.svg)](https://www.npmjs.com/package/vue-form-generator) ![VueJS v2.x compatible](https://img.shields.io/badge/vue%203.x-compatible-green.svg)
 
-A schema-based form generator component for Vue3.js. Original repo: https://github.com/vue-generators/vue-form-generator
+A schema-based form generator component for Vue3.js.
+<br>
+Forked from: https://gitlab.com/nick7dam/vue3-form-generator
+<br>
+Original repo: https://github.com/vue-generators/vue-form-generator
 
-[![Build Status](https://travis-ci.org/vue-generators/vue-form-generator.svg?branch=master)](https://travis-ci.org/vue-generators/vue-form-generator)
 [![Coverage Status](https://coveralls.io/repos/github/vue-generators/vue-form-generator/badge.svg?branch=master)](https://coveralls.io/github/vue-generators/vue-form-generator?branch=master)
-[![NPMS.io score](https://badges.npms.io/vue-form-generator.svg)]()
 [![Package Quality](http://npm.packagequality.com/shield/vue-form-generator.svg)](http://packagequality.com/#?package=vue-form-generator)
-[![Downloads](https://img.shields.io/npm/dm/vue3-form-generator.svg)](https://www.npmjs.com/package/vue3-form-generator)
 
 ## Demo
 
