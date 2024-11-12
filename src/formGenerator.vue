@@ -198,7 +198,7 @@ export default {
 
       this.$refs.children.forEach(child => {
         if (toValidate(child)) {
-          child.validate().then((errors) => {
+          child.validate().then(function (errors) {
             if (errors[0]) {
               Object.keys(this.errors)
                 .filter((key) => {
@@ -211,7 +211,7 @@ export default {
                 error: error[0]
               })
             }
-          })
+          }.bind(this))
         }
       })
     },
