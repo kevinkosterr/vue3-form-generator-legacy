@@ -17,7 +17,7 @@
     </fieldset>
 
     <template v-for="group in groups" :key="group">
-      <fieldset :is="tag" :class="getFieldRowClasses(group)">
+      <fieldset :is="tag" v-if="groupVisible(group)" :class="getFieldRowClasses(group)">
         <legend v-if="group.legend">
           {{ group.legend }}
         </legend>
@@ -159,13 +159,30 @@ export default {
   },
 
   methods: {
-    // Get visible prop of field
+    /**
+     * Determine visibility of the field.
+     * @param field
+     * @returns {boolean|*|boolean}
+     */
     fieldVisible(field) {
       if (isFunction(field.visible)) return field.visible.call(this, this.model, field, this)
 
       if (isNil(field.visible)) return true
 
       return field.visible
+    },
+
+    /**
+     * Determine if the group should be visible.
+     * @param group
+     * @returns {boolean|*|boolean}
+     */
+    groupVisible (group) {
+      if (isFunction(group.visible)) return group.visible.call(this, this.model, group, this)
+
+      if (isNil(group.visible)) return true
+
+      return group.visible
     },
 
     // Child field executed validation
