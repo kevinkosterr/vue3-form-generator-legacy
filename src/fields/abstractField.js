@@ -159,7 +159,9 @@ export default {
           this.schema.onChanged.call(this, this.model, newValue, oldValue, this.schema)
         }
 
-        if (objGet(this.formOptions, 'validateAfterChanged', false) === true) {
+        const validateOnChanged = (this.schema.validation === 'onChanged' || objGet(this.formOptions, 'validateAfterChanged', false) === true)
+
+        if (validateOnChanged) {
           if (objGet(this.schema, 'validateDebounceTime', objGet(this.formOptions, 'validateDebounceTime', 0)) > 0) {
             this.debouncedValidate()
           } else {
