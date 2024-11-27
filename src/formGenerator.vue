@@ -10,6 +10,7 @@
           :errors="errors"
           :model="model"
           :options="options"
+          @blur="onBlur"
           @validated="onFieldValidated"
           @model-updated="onModelUpdated"
         />
@@ -30,6 +31,7 @@
             :errors="errors"
             :model="model"
             :options="options"
+            @blur="onBlur"
             @validated="onFieldValidated"
             @model-updated="onModelUpdated"
           />
@@ -204,8 +206,59 @@ export default {
       this.$emit('validated', isValid, this.errors, this)
     },
 
+    /**
+     * Validates a model field if form is set to validate on blur
+     * @param {any} _newValue - value to validate (ignored).
+     * @param {Object} model
+     */
+    onBlur (_newValue, model) {
+      if (this.options?.validateAfterBlur === true) {
+        this.validateModelField(model)
+      }
+    },
+
     onModelUpdated(newVal, schema) {
       this.$emit('modelUpdated', newVal, schema)
+    },
+
+    /**
+     * Get rid of all the previously reported errors for a specific field
+     * @param {String} modelKey - key in the model that holds the value of this field.
+     * @private
+     */
+    _cleanErrors (modelKey) {
+      Object.keys(this.errors)
+        .filter((key) => {
+          return this.errors[key].field.model === modelKey
+        })
+        .forEach(key => delete this.errors[key])
+    },
+
+    /**
+     * Validate a single child field
+     * @param child
+     * @private
+     */
+    _validateChild (child) {
+      if (this.options.validateAsync) {
+        child.validate().then(function (errors) {
+          if (errors[0]) {
+            this._cleanErrors(child.field.model)
+
+            this.errors.push({
+              field: child.field,
+              error: error[0]
+            })
+          }
+        }.bind(this))
+      } else {
+        const errors = child.validate()
+        if (errors.length) {
+          this._cleanErrors(child.field.model)
+          this.errors.push({ field: child.field, error: errors[0] })
+        }
+      }
+
     },
 
     /** Validate one or more model properties */
@@ -215,20 +268,7 @@ export default {
 
       this.$refs.children.forEach(child => {
         if (toValidate(child)) {
-          child.validate().then(function (errors) {
-            if (errors[0]) {
-              Object.keys(this.errors)
-                .filter((key) => {
-                  return this.errors[key].field.model === child.field.model
-                })
-                .forEach(key => delete this.errors[key])
-
-              this.errors.push({
-                field: child.field,
-                error: error[0]
-              })
-            }
-          }.bind(this))
+          this._validateChild(child)
         }
       })
     },

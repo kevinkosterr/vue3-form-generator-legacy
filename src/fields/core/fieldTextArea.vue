@@ -13,6 +13,7 @@
     :required="schema.required"
     :rows="schema.rows || 2"
     :name="schema.inputName"
+    @blur="onBlur"
   />
 </template>
 
@@ -22,7 +23,12 @@ import abstractField from '../abstractField.js'
 
 export default {
   name: 'FieldTextArea',
-  mixins: [ abstractField ]
+  mixins: [ abstractField ],
+  methods: {
+    onBlur (e) {
+      this.$emit('blur', e.target.value, this.schema.model)
+    }
+  }
 }
 </script>
 

@@ -18,6 +18,7 @@
         :model="model"
         :schema="field || null"
         :form-options="options || null"
+        @blur="onBlur"
         @model-updated="onModelUpdated"
         @validated="onFieldValidated"
       />
@@ -77,6 +78,9 @@ export default {
     }
   },
   methods: {
+    onBlur (newValue, schema) {
+      this.$emit('blur', newValue, schema)
+    },
     // Should field type have a label?
     getAttributes(attrs) {
       const res = {}
