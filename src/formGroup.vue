@@ -2,6 +2,11 @@
   <div class="form-group" :class="getFieldRowClasses(field)">
     <label v-if="fieldTypeHasLabel(field)" :for="getFieldID(field)" :class="field.labelClasses">
       <span>{{ field.label }}</span>
+      <span>
+        <i v-if="hasIconBefore" :class="field.labelIcon.iconClass" />
+        {{ field.label }}
+        <i v-if="hasIconAfter" :class="field.labelIcon.iconClass" />
+      </span>
       <span v-if="field.help" class="help">
         <i class="icon" />
         <div class="helpText">{{ field.help }}</div>
@@ -42,12 +47,14 @@
     </div>
   </div>
 </template>
+
 <script>
 import { get as objGet, isNil, isFunction } from 'lodash'
 import { slugifyFormID } from './utils/schema'
 import formMixin from './formMixin.js'
 import * as fieldComponents from './utils/fieldsLoader'
 import { ref } from 'vue'
+
 export default {
   name: 'FormGroup',
   components: fieldComponents,
@@ -76,6 +83,14 @@ export default {
     return {
       child: ref()
     }
+  },
+  computed: {
+    hasIconBefore () {
+      return this.field.labelIcon && this.field.labelIcon.iconClass && this.field.labelIcon.position === 'before'
+    },
+    hasIconAfter () {
+      return this.field.labelIcon && this.field.labelIcon.iconClass && this.field.labelIcon.position === 'after'
+    },
   },
   methods: {
     onBlur (newValue, schema) {
