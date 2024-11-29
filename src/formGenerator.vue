@@ -247,7 +247,7 @@ export default {
 
             this.errors.push({
               field: child.field,
-              error: error[0]
+              error: errors[0]
             })
           }
         }.bind(this))
@@ -263,6 +263,7 @@ export default {
 
     /** Validate one or more model properties */
     validateModelField (model) {
+      if (!model) return
       /** Determine if the child can and should be validated. */
       const toValidate = (child) => isFunction(child.validate) && model.includes(child.field.model)
 
