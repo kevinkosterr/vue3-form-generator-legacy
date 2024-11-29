@@ -247,7 +247,7 @@ export default {
 
             this.errors.push({
               field: child.field,
-              error: error[0]
+              error: errors[0]
             })
           }
         }.bind(this))
