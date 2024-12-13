@@ -136,31 +136,30 @@ export default {
       return value
     },
     formatDatetimeToModel(newValue, oldValue) {
-      let defaultFormat = DATETIME_FORMATS[this.schema.inputType.toLowerCase()]
-      let m = fecha.parse(newValue, defaultFormat)
-      if (m !== false) {
-        if (this.schema.format) {
-          newValue = fecha.format(m, this.schema.format)
-        } else {
-          newValue = m.valueOf()
+      const format = DATETIME_FORMATS[this.schema.inputType.toLowerCase()]
+      if (newValue) {
+        let m = fecha.parse(newValue, format)
+        if (m !== false) {
+          if (this.schema.format) {
+            newValue = fecha.format(m, this.schema.format)
+          } else {
+            newValue = m.valueOf()
+          }
         }
       }
       this.updateModelValue(newValue, oldValue)
     },
     formatDatetimeValueToField(value) {
-      if(value === null || undefined === value) {
-        return null
+      if (!value) return null
+
+      const format = DATETIME_FORMATS[this.schema.inputType.toLowerCase()]
+      let m = value
+
+      if(!isNumber(value)) {
+        m = fecha.parse(value, format)
       }
 
-      let defaultFormat = DATETIME_FORMATS[this.schema.inputType.toLowerCase()]
-      let m = value
-      if(!isNumber(value)) {
-        m = fecha.parse(value, defaultFormat)
-      }
-      if(m !== false) {
-        return fecha.format(m, defaultFormat)
-      }
-      return value
+      return m !== false ? fecha.format(m, format) : value
     },
     formatNumberToModel(newValue, oldValue) {
       if (!isNumber(newValue)) {
