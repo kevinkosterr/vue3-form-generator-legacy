@@ -1,7 +1,10 @@
 // @ts-nocheck
 import { get as objGet, forEach, isFunction, isString, isArray, debounce, uniqueId, uniq as arrayUniq } from 'lodash'
-import validators from '../utils/validators'
-import { slugifyFormID } from '../utils/schema'
+import { slugifyFormID } from '@/utils/schema'
+import { vAttributes } from '@/directives/vAttributes'
+
+import validators from '@/utils/validators'
+
 function convertValidator(validator) {
   if (isString(validator)) {
     if (validators[validator] != null) return validators[validator]
@@ -13,16 +16,6 @@ function convertValidator(validator) {
   return validator
 }
 
-function attributesDirective(el, binding, vnode) {
-  let attrs = objGet(vnode.context, 'schema.attributes', {})
-  let container = binding.value || 'input'
-  if (isString(container)) {
-    attrs = objGet(attrs, container) || attrs
-  }
-  forEach(attrs, (val, key) => {
-    el.setAttribute(key, val)
-  })
-}
 export default {
   name: 'abstractField',
   props: [ 'vfg', 'model', 'schema', 'formOptions', 'disabled' ],
@@ -34,11 +27,7 @@ export default {
     }
   },
   directives: {
-    attributes: {
-      beforeMount: attributesDirective,
-      updated: attributesDirective,
-      componentUpdated: attributesDirective
-    }
+    attributes: vAttributes
   },
   computed: {
     value: {
