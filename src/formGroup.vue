@@ -38,7 +38,12 @@
     </div>
 
     <div v-if="field.hint" class="hint">
-      {{ fieldHint(field) || '' }}
+      <template v-if="field.hintHtml">
+        <span v-html="fieldHint(field)" />
+      </template>
+      <template v-else>
+        {{ fieldHint(field) || '' }}
+      </template>
     </div>
 
     <div v-if="fieldErrors(field).length > 0" class="errors help-block">
