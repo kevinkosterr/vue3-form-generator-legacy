@@ -46,6 +46,12 @@
       </template>
     </div>
 
+    <div v-if="field.notice" class="notices help-block">
+      <i class="mdi mdi-information" />
+      <span v-if="field.noticeHtml" v-html="fieldNotice(field)" />
+      <span v-else>{{ fieldNotice(field) || '' }}</span>
+    </div>
+
     <div v-if="fieldErrors(field).length > 0" class="errors help-block">
       <span v-for="(error, index) in fieldErrors(field)" :key="index">{{ error }}</span>
     </div>
@@ -160,6 +166,12 @@ export default {
       if (isFunction(field.hint)) return field.hint.call(this, this.model, field, this)
 
       return field.hint
+    },
+    /** Get current notice for field **/
+    fieldNotice (field) {
+      if (isFunction(field.notice)) return field.notice.call(this, this.model, field, this)
+
+      return field.notice
     },
     fieldErrors(field) {
       return this.errors.filter((e) => e.field.model === field.model).map((item) => item.error)
