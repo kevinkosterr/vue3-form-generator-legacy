@@ -288,8 +288,10 @@ export default {
 
       this.$refs.children.forEach(child => {
         if (child && isFunction(child.validate)) {
-          fields.push(child)
-          results.push(child.validate(true))
+          if (child.$refs.child) {
+            fields.push(child.$refs.child)
+            results.push(child.validate(true))
+          }
         }
       })
 
