@@ -240,6 +240,8 @@ export default {
      * @private
      */
     _validateChild (child) {
+      if (!child) return
+
       if (this.options.validateAsync) {
         child.validate().then(function (errors) {
           if (errors[0]) {
@@ -284,10 +286,10 @@ export default {
       let fields = []
       let results = []
 
-      forEach(this.$refs.children, child => {
-        if (isFunction(child.validate)) {
-          fields.push(child.$refs.child) // keep track of validated children
-          results.push(child.$refs.child.validate(true))
+      this.$refs.children.forEach(child => {
+        if (child && isFunction(child.validate)) {
+          fields.push(child)
+          results.push(child.validate(true))
         }
       })
 

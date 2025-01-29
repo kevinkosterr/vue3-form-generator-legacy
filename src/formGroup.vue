@@ -63,7 +63,6 @@ import { get as objGet, isNil, isFunction } from 'lodash'
 import { slugifyFormID } from './utils/schema'
 import formMixin from './formMixin.js'
 import * as fieldComponents from './utils/fieldsLoader'
-import { ref } from 'vue'
 
 export default {
   name: 'FormGroup',
@@ -87,11 +86,6 @@ export default {
       default() {
         return []
       }
-    }
-  },
-  data() {
-    return {
-      child: ref()
     }
   },
   computed: {
@@ -180,7 +174,9 @@ export default {
       this.$emit('modelUpdated', newVal, schema)
     },
     validate(calledParent) {
-      return this.$refs.child.validate(calledParent)
+      if (this.$refs.child) {
+        return this.$refs.child.validate(calledParent)
+      }
     },
     clearValidationErrors() {
       if (this.$refs.child) {
