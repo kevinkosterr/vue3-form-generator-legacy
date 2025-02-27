@@ -3,7 +3,10 @@
     <label v-if="hasLabel" :for="fieldId" :class="field.labelClasses">
       <span>
         <i v-if="hasIconBefore" :class="field.labelIcon.iconClass" />
-        {{ field.label }}
+        <template v-if="field.labelHtml">
+          <span v-html="field.label" />
+        </template>
+        <template v-else>{{ field.label }}</template>
         <i v-if="hasIconAfter" :class="field.labelIcon.iconClass" />
       </span>
       <span v-if="field.help" class="help">
