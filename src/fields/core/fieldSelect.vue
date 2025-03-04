@@ -3,7 +3,7 @@
     :id="getFieldID(schema)"
     v-model="value"
     v-attributes="'input'"
-    class="form-control"
+    class="form-select"
     :disabled="disabled || null"
     :name="schema.inputName"
     :class="schema.fieldClasses"
