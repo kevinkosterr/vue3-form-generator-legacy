@@ -212,7 +212,7 @@ export default {
      * @param {Object} model
      */
     onBlur (_newValue, model) {
-      if (this.options?.validateAfterBlur === true) {
+      if (this.options?.validateAfterBlur === true || this.options.validateAfterChanged === false) {
         this.validateModelField(model)
       }
     },
